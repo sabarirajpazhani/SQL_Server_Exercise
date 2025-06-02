@@ -30,9 +30,33 @@ begin
 	join Artist AR on AR.Artist_ID = A.Artist_ID
 	join Subgenre S on S.Subgenre_ID = A.Subgenre_ID
 	where Subgenre = 'Rock and roll'
-	order by Title;
+	order by A.Title;
 end
 
 exec spSubgenreInRockAndRoll;
 
+--Add a CREATE PROC statement to the query to create a stored procedure called usp_Rock_and_Roll_Albums.
+--Execute the script to create the procedure and then execute the procedure to see its results.
+--Alter the procedure to return the extra columns
 
+sp_rename 'spSubgenreInRockAndRoll', 'usp_Rock_and_Roll_Albums'
+
+alter procedure usp_Rock_and_Roll_Albums
+as
+begin
+	select A.Title, 
+		   AR.Artist,
+		   AR.Artist_type, 
+		   S.Subgenre,
+		   A.Release_date,
+		   A.[US_sales_(m)], 
+		   A.US_Billboard_200_peak 
+	from Album A
+	join Artist AR on AR.Artist_ID = A.Artist_ID
+	join Subgenre S on S.Subgenre_ID = A.Subgenre_ID
+	WHERE S.Subgenre= 'Rock and roll'
+	order by A.Title;
+end
+
+exec usp_Rock_and_Roll_Albums
+	
