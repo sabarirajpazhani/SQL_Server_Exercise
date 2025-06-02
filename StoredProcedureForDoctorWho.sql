@@ -1,11 +1,10 @@
 USE [DoctorWho]
 GO
 
-select * from tblDoctor;
+select * from tblEpisode;
 
 --First (if you haven't already done so) run the script shown above to generate the Doctor Who training database.
 --Write a SELECT statement in SQL to list out all of the episodes which featured Matt Smith as the Doctor:
-
 create procedure spDoctorWho
 as
 begin
@@ -21,3 +20,23 @@ end
 
 
 exec spDoctorWho
+
+
+--Creating a Stored Procedure
+--Add the following at the start of your SQL to store it as a stored procedure:
+--CREATE PROC spMattSmithEpisodes
+--Run your stored procedure to show that it lists out 44 films.  Now change your script so that it alters the stored procedure to list out only those episodes featuring Matt Smith made in 2012, using this syntax in the WHERE clause:
+create Procedure spMattSmithEpisodes
+as
+begin
+	select e.SeriesNumber as Series,
+		   e.EpisodeNumber as Episode,
+		   e.Title,
+		   e.EpisodeDate as Date_of_episode,
+		   d.DoctorName
+	from tblEpisode e
+	join tblDoctor d on e.DoctorId = d.DoctorId
+	where d.DoctorName = 'Matt Smith' AND year(EpisodeDate) = 2012;
+end
+
+exec spMattSmithEpisodes;
