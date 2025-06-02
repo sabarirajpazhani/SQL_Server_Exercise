@@ -20,3 +20,19 @@ begin
 	where US_Billboard_200_peak = 1
 	order by [US_sales_(m)] desc;
 end;
+exec usp_Number_1_Albums
+
+--Create a query to return the following columns from the Album, Artist and Subgenre tables for albums in the Rock and roll subgenre.
+create procedure spSubgenreInRockAndRoll
+as
+begin
+	select A.Title, AR.Artist, S.Subgenre, A.Release_date, A.US_Billboard_200_peak from Album A
+	join Artist AR on AR.Artist_ID = A.Artist_ID
+	join Subgenre S on S.Subgenre_ID = A.Subgenre_ID
+	where Subgenre = 'Rock and roll'
+	order by Title;
+end
+
+exec spSubgenreInRockAndRoll;
+
+
