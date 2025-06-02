@@ -55,3 +55,18 @@ begin
 end
 
 exec spMoffats
+
+--Now amend your SQL so that it creates a different stored procedure called spRussell, listing out the 30 episodes penned by people called Russell:
+
+create procedure spRussell
+as
+begin 
+	select e.Title from tblEpisode e
+	join tblAuthor a on a.AuthorId = e.AuthorId
+	where a.AuthorName = 'Russell'
+	ORDER BY e.Title 
+	offset 0 rows
+	fetch next 30 rows only;
+end
+
+exec spMoffats
