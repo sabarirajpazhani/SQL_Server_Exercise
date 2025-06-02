@@ -40,3 +40,18 @@ begin
 end
 
 exec spMattSmithEpisodes;
+
+
+--Using the tblAuthor and tblEpisode tables, create a stored procedure called spMoffats to list out the 32 episodes written by Steven Moffat in date order (with the most recent first):
+create procedure spMoffats
+as
+begin 
+	select e.Title from tblEpisode e
+	join tblAuthor a on a.AuthorId = e.AuthorId
+	where a.AuthorName = 'Steven Moffat'
+	ORDER BY e.Title 
+	offset 0 rows
+	fetch next 32 rows only;
+end
+
+exec spMoffats
